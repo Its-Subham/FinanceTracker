@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const incomeRoutes = require('./routes/expenseRoutes');
 
 
 const app = express();
@@ -27,6 +28,8 @@ app.get("/health", (req, res) => {
   res.send("API is running");
 });
 app.use('/api/auth', authRoutes);
+app.use('/api/income', incomeRoutes);
+app.use('/api/expense', expenseRoutes);
 
 
 // Server uploads folder
