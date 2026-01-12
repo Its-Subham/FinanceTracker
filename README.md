@@ -89,5 +89,4 @@ Open the frontend URL printed by Vite (usually `http://localhost:5173`) and the 
 **Contribution & License**
 - Open to improvements; create issues or pull requests against this repo.
 
----
-Generated README for quick setup and deployment. If you'd like, I can add a short `CONTRIBUTING.md`, example `.env.example` files, or badge links for CI.
+
