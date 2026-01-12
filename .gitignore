@@ -30,8 +30,7 @@ public/build/
 .env.local
 
 # User uploads
-uploads/*
-!.gitkeep
+backend/uploads/.gitkeep
 
 ### Logs
 logs/
