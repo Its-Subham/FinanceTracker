@@ -29,6 +29,10 @@ public/build/
 .env.*.local
 .env.local
 
+# User uploads
+uploads/*
+!.gitkeep
+
 ### Logs
 logs/
 *.log

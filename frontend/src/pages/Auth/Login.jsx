@@ -6,7 +6,7 @@ import Input from "../../components/inputs/Input";
 import { validateEmail } from "../../utils/helper";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { UserContext } from "../../context/userContex";
+import { UserContext } from "../../context/userContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +38,7 @@ const Login = () => {
       });
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
+        // console.log(response.data.user);
         updateUser(response.data.user);
         navigate("/dashboard");
       }
