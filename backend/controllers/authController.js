@@ -12,6 +12,9 @@ const generateToken = (id) => {
 module.exports.registerUser = async (req, res) => {
     const {fullName, email, password, profileImageUrl} = req.body;
 
+    // Debug: log incoming body for troubleshooting
+    console.log('Register payload:', { fullName, email, profileImageUrl });
+
     // Validation: Check for missing fields
     if (!fullName || !email || !password) {
         return res.status(400).json({message: 'All fields are required.'});
@@ -24,12 +27,15 @@ module.exports.registerUser = async (req, res) => {
             return res.status(400).json({message: 'Email already exists.'});
         }
 
+        // Normalize profile image value: convert empty string to null
+        const normalizedProfileImageUrl = profileImageUrl && profileImageUrl.trim() !== "" ? profileImageUrl : null;
+
         // Create new user
         const user = await User.create({
             fullName,
             email,
             password,
-            profileImageUrl
+            profileImageUrl: normalizedProfileImageUrl
         });
 
         res.status(201).json({
