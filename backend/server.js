@@ -26,6 +26,9 @@ connectDB();
 
 // Routes
 
+app.get("/", (req, res) => {
+  res.send("Hello From Backend...");
+});
 app.get("/health", (req, res) => {
   res.send("API is running");
 });

@@ -30,8 +30,9 @@ public/build/
 .env.local
 
 # Ignore uploaded images
-uploads/*
-!.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
+
 
 
 ### Logs
