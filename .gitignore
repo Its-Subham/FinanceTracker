@@ -29,8 +29,10 @@ public/build/
 .env.*.local
 .env.local
 
-# User uploads
-backend/uploads/.gitkeep
+# Ignore uploaded images
+uploads/*
+!.gitkeep
+
 
 ### Logs
 logs/
