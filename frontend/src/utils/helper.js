@@ -1,3 +1,6 @@
+
+import moment from "moment";
+
 export const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(String(email).toLowerCase());
@@ -31,6 +34,16 @@ export const prepareExpenseBarChartData = (data = []) => {
 
   return data.map((item) => ({
     category: item?.category || "Unknown",
+    amount: item?.amount || 0,
+  }));
+};
+
+
+export const prepareIncomeBarChartData = (transactions = []) => {
+  if (!Array.isArray(transactions)) return [];
+
+  return transactions.map((item) => ({
+    category: item?.source || "Unknown", // ✅ MUST be `category`
     amount: item?.amount || 0,
   }));
 };
