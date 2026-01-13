@@ -5,6 +5,7 @@ import DashboardLayout from '../../components/layout/DashboardLayout'
 import IncomeOverview from '../../components/Income/IncomeOverview'
 import Model from '../../components/Model'
 import AddIncomeForm from '../../components/Income/AddIncomeForm'
+import toast from 'react-hot-toast';
 
 const Income = () => {
 
@@ -36,7 +37,36 @@ const Income = () => {
   };
 
   // Handel Add Income
-  const handelAddIncome = async (income) => {};
+  const handelAddIncome = async (income) => {
+    const {source, amount, date, icon} = income;
+
+    // Validate Inputs
+    if(!source.trim()){
+      toast.error("Source is required");
+      return;
+    }
+    if(!amount || isNaN(amount) || Number(amount) < 0){
+      toast.error("Amount is required and should be a valid number greater than 0");
+      return;
+    }
+    if(!date){
+      toast.error("Date is required");
+      return;
+    }
+
+    try {
+      await axiosInstance.post(`${API_PATHS.INCOME.ADD_INCOME}`, {source, amount, date, icon});
+
+      setOpenAddInomeModal(false);
+      toast.success("Income Added Successfully");
+      fetchIncomeDetails();
+    } catch (error) {
+      console.log('Error adding income', error);
+      toast.error("Error Adding Income"); 
+
+    }
+
+  };
 
   // Handle Delete Income
   const deleteIncome = async (id) => {}

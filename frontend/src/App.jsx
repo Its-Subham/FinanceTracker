@@ -6,11 +6,12 @@ import Income from "./pages/Dashboard/Income";
 import Expense from "./pages/Dashboard/Expense";
 import UserProvider from "./context/userContext";
 import Home from "./pages/Dashboard/Home";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
-    <div>
-      <UserProvider>
+    <UserProvider>
+        <div>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Root />} />
@@ -21,8 +22,16 @@ const App = () => {
             <Route path="/dashboard" element={<Home />} />
           </Routes>
         </BrowserRouter>
-      </UserProvider>
     </div>
+    <Toaster 
+      toastOptions={{
+        className: "",
+        style: {
+          fontSize: "13px",
+        },
+      }}
+    />
+      </UserProvider>
   );
 };
 
