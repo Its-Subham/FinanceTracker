@@ -28,7 +28,7 @@ exports.getAllExpense = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const expense = await Income.find({ userId }).sort({ date: -1 });
+    const expense = await Expense.find({ userId }).sort({ date: -1 });
     res.status(200).json(expense);
   } catch (error) {
     res
@@ -37,10 +37,10 @@ exports.getAllExpense = async (req, res) => {
   }
 };
 
-// Delete Income Source
+// Delete Expense Source
 exports.deleteExpense = async (req, res) => {
   try {
-    const expense = await Income.findByIdAndDelete(req.params.id);
+    const expense = await Expense.findByIdAndDelete(req.params.id);
     res.status(200).json(expense);
   } catch (error) {
     res
@@ -49,7 +49,7 @@ exports.deleteExpense = async (req, res) => {
   }
 };
 
-// Download Income Excel
+// Download Expense Excel
 exports.downloadExpenseExcel = async (req, res) => {
   const userId = req.user._id;
 

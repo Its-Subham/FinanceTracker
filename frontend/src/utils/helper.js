@@ -43,8 +43,23 @@ export const prepareIncomeBarChartData = (transactions = []) => {
   if (!Array.isArray(transactions)) return [];
 
   return transactions.map((item) => ({
-    category: item?.source || "Unknown", // ✅ MUST be `category`
+    category: item?.source || "Unknown",
     amount: item?.amount || 0,
   }));
+};
+
+
+export const prepareExpenseLineChartData = (data = []) => {
+  if (!Array.isArray(data)) return [];
+
+  const sortData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  const chartData = sortData.map((item) => ({
+    month: moment(item?.date).format("DD MMM"),
+    amount: item?.amount,
+    category: item?.category,
+  }));
+
+  return chartData;
 };
 
