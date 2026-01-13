@@ -6,8 +6,12 @@ import IncomeOverview from '../../components/Income/IncomeOverview'
 import Model from '../../components/Model'
 import AddIncomeForm from '../../components/Income/AddIncomeForm'
 import toast from 'react-hot-toast';
+import IncomeList from '../../components/Income/IncomeList'
+import DeleteAlert from '../../components/DeleteAlert'
+import { useUserAuth } from '../../hooks/useUserAuth'
 
 const Income = () => {
+  useUserAuth();
 
   const [incomeData, setIncomeData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -69,7 +73,17 @@ const Income = () => {
   };
 
   // Handle Delete Income
-  const deleteIncome = async (id) => {}
+  const deleteIncome = async (id) => {
+    try {
+      await axiosInstance.delete(`${API_PATHS.INCOME.DELETE_INCOME(id)}`);
+      setOpenDeleteAlert({show: false, data: null});
+      toast.success("Income Deleted Successfully");
+      fetchIncomeDetails();
+    } catch (error) {
+      console.log('Error deleting income', error);
+      toast.error("Error Deleting Income"); 
+    }
+  }
 
   // handle download income details
   const handleDownloadIncomeDetails = async () => {};
@@ -88,6 +102,13 @@ const Income = () => {
               transactions={incomeData}
               onAddIncome={() => setOpenAddInomeModal(true)}
             />
+
+            <IncomeList 
+              transactions={incomeData}
+              onDelete={(id) => setOpenDeleteAlert({show: true, data: id})}
+              onDownload={() => handleDownloadIncomeDetails}
+            />
+
           </div>
         </div>
         <Model
@@ -97,6 +118,17 @@ const Income = () => {
         >
           <AddIncomeForm onAddIncome={handelAddIncome} />
         </Model>
+
+        <Model
+          isOpen={openDeleteAlert.show}
+          onClose={() => setOpenDeleteAlert({show: false, data: null})}
+          title="Delete Income"
+          >
+            <DeleteAlert
+              content={`Are you sure you want to delete?`}
+              onDelete={()=>deleteIncome(openDeleteAlert.data)}
+            />
+          </Model>
       </div>
     </DashboardLayout>
   )
