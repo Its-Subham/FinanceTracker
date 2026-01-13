@@ -93,7 +93,27 @@ const Expense = () => {
   };
 
   // handle download Expense details
-  const handleDownloadExpenseDetails = async () => {};
+  const handleDownloadExpenseDetails = async () => {
+    try{ 
+      const response = await axiosInstance.get(`${API_PATHS.EXPENSE.DOWNLOAD_EXPENSE}`,{
+        responseType: 'blob'
+      });
+
+      // Create a URL for the blob
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "expense_details.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    }
+    catch(error){
+      console.log('Error downloading expense details', error);
+      toast.error("Error downloading expense details, Please try again.");
+    }
+  };
 
   useEffect(() => {
     fetchExpenseDetails();
@@ -112,7 +132,7 @@ const Expense = () => {
           <ExpenseList
             transactions={expenseData}
             onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
-            onDownload={() => handleDownloadExpenseDetails}
+            onDownload={handleDownloadExpenseDetails}
           />
         </div>
 
